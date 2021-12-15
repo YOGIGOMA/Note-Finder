@@ -1,1 +1,1 @@
-# note-finder
+# Word Finder in Clinic Note.
