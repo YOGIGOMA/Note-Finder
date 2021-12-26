@@ -10,7 +10,6 @@ def translation(dic_list, str):
 
     return str
 
-
 def remove_string_pattern(input_str):  # 사전에 정의한 제거문자열 패턴을 탐색하여 제거하는 함수
     pattern_list = []
 
@@ -42,10 +41,12 @@ output = open("data/input_ko.txt", mode="w", encoding="utf-8")
 input_list = input.readlines()  # 입력 텍스트파일의 데이터를 리스트 형태로 변환함
 output_list = []
 
+
 dic_list = []
 with open('data/en2ko_dictionary.csv') as f:
     for line in csv.reader(f):
         dic_list.append(tuple(line[0].split(', ')))
+
 
 try:
     for idx in range(len(input_list)):  # input.txt의 행을 기준으로 데이터를 처리
@@ -64,6 +65,13 @@ try:
                 input_list[idx] = remove_string_pattern(
                     input_list[idx])  # 사전에 정의한 제거문자열 패턴을 탐색하여 제거
 
+                # 불필요한 문자열 제거 후
+                output_list.append(input_list[idx])
+
+    # 입력 텍스트파일 처리가 완료된 경우, 입력 텍스트파일에서 읽은 행의 개수와 만들어진 입력 데이터의 개수를 출력
+
+
+except Exception as e:  # 입력 텍스트파일을 처리하는 도중에 문제가 생기는 경우
                 input_list[idx] = translation(dic_list, input_list[idx])
 
                 # 불필요한 문자열 제거 후
