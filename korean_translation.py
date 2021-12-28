@@ -43,7 +43,7 @@ output_list = []
 
 
 dic_list = []
-with open('data/en2ko_dictionary.csv') as f:
+with open('data/en2ko_dictionary.csv', encoding="utf-8") as f:
     for line in csv.reader(f):
         dic_list.append(tuple(line[0].split(', ')))
 
