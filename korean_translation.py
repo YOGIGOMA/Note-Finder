@@ -6,7 +6,8 @@ import pandas as pd
 
 def translation(input_str):
     for i in range(len(dic_df)):
-        input_str = re.sub(dic_df.loc[i]["#en"], dic_df.loc[i]["#ko"], input_str)
+        input_str = re.sub(dic_df.loc[i]["#en"],
+                           dic_df.loc[i]["#ko"], input_str)
     return input_str
 
 
@@ -25,7 +26,6 @@ def remove_string_pattern(input_str):  # 사전에 정의한 제거문자열 패
         '(([0-9]{4}-[0-9]{2}-[0-9]{2})+[ \[]+[a-zA-Z ]+[\] :]+Any mmHg)')  # 4자리숫자-2자리숫자-2자리숫자 [영문 | 공백] : Any mmHg
     # 특수문자들 (따옴표, 쉼표, 마침표, 콤마 등)
     pattern_list.append('([^0-9a-zA-Zㄱ-ㅣ가-힣 \n])')
-    # pattern_list.append('([\'\".,])')
     pattern_list.append('([0-9])')  # 숫자
 
     repl = ''
@@ -40,32 +40,44 @@ input = open("data/input.txt", mode="r", encoding="utf-8")
 output = open("data/input_ko.txt", mode="w", encoding="utf-8")
 
 input_list = input.readlines()  # 입력 텍스트파일의 데이터를 리스트 형태로 변환함
-output_list = []
+output_list = ["#ProcessedData\n"]
 
 dic_df = pd.read_csv('data/en2ko_dictionary.csv',
-                     encoding='utf-8', low_memory=False)
+                     encoding="utf-8", low_memory=False)
+
 
 try:
-    for idx in range(len(input_list)):  # input.txt의 행을 기준으로 데이터를 처리
+    '''
+    input.txt를 불러올 때는 행을 기준으로 데이터를 불러오지만, 처리는 단락을 기준으로 하기 때문에
+    행이 비어있지 않고, 내용이 들어있을 때 (else문에서) note_str에 문자열을 이어붙히고 
+    행이 비어 있을 때 (if문에서) 이어붙혀진 note_str의 제거문자열을 제거하고, 동의어사전을 기반으로 번역작업 수행
+    수행 후, output file에 write할 output_list에 넣어준다.
+    '''
+
+    note_str = ""
+    for idx in range(1, len(input_list)):  # 첫째줄을 제외하고 input.txt의 행을 기준으로 데이터를 처리
         if input_list[idx] == "\n":  # 행이 비어 있을 때
-            pass
-        else:  # 행이 비어있지 않고, 내용이 들어있을 때
             # 빈문자열을 가진 행을 만나거나 콤마(,)만 포함된 문자열을 가진 행이 있다면 이전까지의 문자열을 합쳐 하나의 입력데이터로 만든다.
-            if (input_list[idx] == " " or input_list[idx] == ","):
+            if (note_str == " " or note_str == "," or note_str == "\n"):
                 pass
             else:
                 # 행의 시작이 공백이나 특수문자로 시작된다면 해당 문자를 모두 제거
-                input_list[idx] = input_list[idx].lstrip()  # 왼쪽의 공백 삭제하기
-                input_list[idx] = input_list[idx].lstrip(
+                note_str = note_str.lstrip()  # 왼쪽의 공백 삭제하기
+                note_str = note_str.lstrip(
                     string.punctuation)  # 왼쪽의 구두점 삭제
 
-                input_list[idx] = remove_string_pattern(
-                    input_list[idx])  # 사전에 정의한 제거문자열 패턴을 탐색하여 제거
+                note_str = remove_string_pattern(
+                    note_str)  # 사전에 정의한 제거문자열 패턴을 탐색하여 제거
 
-                input_list[idx] = translation(input_list[idx])
+                note_str = translation(note_str)
 
                 # 불필요한 문자열 제거 후
-                output_list.append(input_list[idx])
+                note_str += "\n"
+                output_list.append(note_str)
+                note_str = "\n"
+
+        else:  # 행이 비어있지 않고, 내용이 들어있을 때
+            note_str += input_list[idx][:-1]
 
 
 except Exception as e:  # 입력 번역사전 텍스트파일을 처리하는 도중 혹은 입력 텍스트파일을 처리하는 도중에 문제가 생기는 경우
