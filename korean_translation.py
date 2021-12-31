@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 import re
 import string  # string.punctuation 사용하기 위해 import
-import csv
+import pandas as pd
 
 
-def translation(dic_list, str):
-    for tup in dic_list:
-        str = str.replace(tup[0], tup[-1])
-
-    return str
+def translation(input_str):
+    for i in range(len(dic_df)):
+        input_str = re.sub(dic_df.loc[i]["#en"], dic_df.loc[i]["#ko"], input_str)
+    return input_str
 
 
 def remove_string_pattern(input_str):  # 사전에 정의한 제거문자열 패턴을 탐색하여 제거하는 함수
@@ -24,7 +23,8 @@ def remove_string_pattern(input_str):  # 사전에 정의한 제거문자열 패
         '(([0-9]{4}-[0-9]{2}-[0-9]{2})+[ \[]+[a-zA-Z ]+[\] :]+Any PH)')  # 4자리숫자-2자리숫자-2자리숫자 [영문 | 공백] : Any PH
     pattern_list.append(
         '(([0-9]{4}-[0-9]{2}-[0-9]{2})+[ \[]+[a-zA-Z ]+[\] :]+Any mmHg)')  # 4자리숫자-2자리숫자-2자리숫자 [영문 | 공백] : Any mmHg
-    pattern_list.append('([^0-9a-zA-Zㄱ-ㅣ가-힣 \n])')  # 특수문자들 (따옴표, 쉼표, 마침표, 콤마)
+    # 특수문자들 (따옴표, 쉼표, 마침표, 콤마 등)
+    pattern_list.append('([^0-9a-zA-Zㄱ-ㅣ가-힣 \n])')
     # pattern_list.append('([\'\".,])')
     pattern_list.append('([0-9])')  # 숫자
 
@@ -42,10 +42,8 @@ output = open("data/input_ko.txt", mode="w", encoding="utf-8")
 input_list = input.readlines()  # 입력 텍스트파일의 데이터를 리스트 형태로 변환함
 output_list = []
 
-dic_list = []
-with open('data/en2ko_dictionary.csv', encoding="utf-8") as f:
-    for line in csv.reader(f):
-        dic_list.append(tuple(line[0].split(', ')))
+dic_df = pd.read_csv('data/en2ko_dictionary.csv',
+                     encoding='utf-8', low_memory=False)
 
 try:
     for idx in range(len(input_list)):  # input.txt의 행을 기준으로 데이터를 처리
@@ -64,7 +62,7 @@ try:
                 input_list[idx] = remove_string_pattern(
                     input_list[idx])  # 사전에 정의한 제거문자열 패턴을 탐색하여 제거
 
-                input_list[idx] = translation(dic_list, input_list[idx])
+                input_list[idx] = translation(input_list[idx])
 
                 # 불필요한 문자열 제거 후
                 output_list.append(input_list[idx])
@@ -76,7 +74,7 @@ except Exception as e:  # 입력 번역사전 텍스트파일을 처리하는 �
 
 
 print("입력 텍스트파일에서 읽은 행의 개수", len(input_list))
-print("입력 번역사전에서 읽어들인 용어의 개수", len(dic_list)-1)
+print("입력 번역사전에서 읽어들인 용어의 개수", len(dic_df)-1)
 print("만들어진 입력데이터의 개수", len(output_list))
 
 output.writelines(output_list)
