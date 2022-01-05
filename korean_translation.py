@@ -57,8 +57,8 @@ try:
     note_str = ""
     for idx in range(1, len(input_list)):  # 첫째줄을 제외하고 input.txt의 행을 기준으로 데이터를 처리
         if input_list[idx] == "\n":  # 행이 비어 있을 때
-            # 빈문자열을 가진 행을 만나거나 콤마(,)만 포함된 문자열을 가진 행이 있다면 이전까지의 문자열을 합쳐 하나의 입력데이터로 만든다.
-            if (note_str == " " or note_str == "," or note_str == "\n"):
+            # 빈 문자열을 가진 행을 만나거나 콤마(,)만 포함된 문자열을 가진 행이 있다면 이전까지의 문자열을 합쳐 하나의 입력데이터로 만든다.
+            if (note_str == "" or note_str == " " or note_str == "," or note_str == "\n"):
                 pass
             else:
                 # 행의 시작이 공백이나 특수문자로 시작된다면 해당 문자를 모두 제거
@@ -72,7 +72,7 @@ try:
                 note_str = translation(note_str)
 
                 # 불필요한 문자열 제거 후
-                note_str += "\n"
+                note_str += "\n\n"
                 output_list.append(note_str)
                 note_str = "\n"
 
