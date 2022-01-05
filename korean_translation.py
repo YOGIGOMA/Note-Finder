@@ -60,21 +60,27 @@ try:
             # 빈 문자열을 가진 행을 만나거나 콤마(,)만 포함된 문자열을 가진 행이 있다면 이전까지의 문자열을 합쳐 하나의 입력데이터로 만든다.
             if (note_str == "" or note_str == " " or note_str == "," or note_str == "\n"):
                 pass
-            else:
-                # 행의 시작이 공백이나 특수문자로 시작된다면 해당 문자를 모두 제거
-                note_str = note_str.lstrip()  # 왼쪽의 공백 삭제하기
-                note_str = note_str.lstrip(
-                    string.punctuation)  # 왼쪽의 구두점 삭제
 
+            else:
                 note_str = remove_string_pattern(
                     note_str)  # 사전에 정의한 제거문자열 패턴을 탐색하여 제거
 
                 note_str = translation(note_str)
 
+                # 행의 시작이 공백이나 특수문자로 시작된다면 해당 문자를 모두 제거
+                note_str = note_str.lstrip()  # 왼쪽의 공백 삭제하기
+                note_str = note_str.lstrip(
+                    string.punctuation)  # 왼쪽의 구두점 삭제
+
                 # 불필요한 문자열 제거 후
-                note_str += "\n\n"
-                output_list.append(note_str)
-                note_str = "\n"
+                if (note_str == "" or note_str == " " or note_str == "," or note_str == "\n"):
+                    # 만약 불필요한 문자열을 제거하였는데 남은게 없다면
+                    pass
+
+                else:
+                    note_str += "\n\n"
+                    output_list.append(note_str)
+                    note_str = "\n"
 
         else:  # 행이 비어있지 않고, 내용이 들어있을 때
             note_str += input_list[idx][:-1]
