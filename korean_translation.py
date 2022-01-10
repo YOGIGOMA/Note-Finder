@@ -6,7 +6,13 @@ import pandas as pd
 
 def translation(input_str):
     for i in range(len(dic_df)):
-        input_str = re.sub(dic_df.loc[i]["#en"], dic_df.loc[i]["#ko"], input_str)
+        input_str = re.sub(
+            " " + dic_df.loc[i]["#en"], " " + dic_df.loc[i]["#ko"], input_str
+        )
+        input_str = re.sub(
+            dic_df.loc[i]["#en"] + " ", dic_df.loc[i]["#ko"] + " ", input_str
+        )
+
     return input_str
 
 
@@ -27,52 +33,53 @@ dic_df = pd.read_csv("data/en2ko_dictionary.csv", encoding="utf-8", low_memory=F
 
 pattern_dict = {}
 
-pattern_dict["(NIBP_평균+[^0-9]+[0-9. ]+)"] = "평균혈압"  # NIBP_평균(mmHg) : 숫자
-pattern_dict["(NIBP_이완기+[^0-9]+[0-9. ]+)"] = "이완기혈압"  # NIBP_수축기(mmHg) : 숫자
-pattern_dict["(NIBP_수축기+[^0-9]+[0-9. ]+)"] = "수축기혈압"  # NIBP_이완기(mmHg) : 숫자
-pattern_dict["(PR+[^0-9]+[0-9. ]+)"] = "맥박"  # PR문자열 : 숫자
-pattern_dict["(RR+[^0-9]+[0-9. ]+)"] = "호흡수"  # RR문자열 : 숫자
-pattern_dict["(BT+[^0-9]+[0-9. ]+)"] = "체온"  # BT문자열 : 숫자
-pattern_dict["(SpO+[^0-9]+[0-9. ]+)"] = "말초산소포화도"  # SpO문자열 : 숫자
-pattern_dict["(Device+[^0-9]+[a-zA-Z]+)"] = "기기"  # Device : 영문자
+pattern_dict["(NIBP_평균+[^0-9]+[0-9. ]+)"] = "평균혈압 "  # NIBP_평균(mmHg) : 숫자
+pattern_dict["(NIBP_이완기+[^0-9]+[0-9. ]+)"] = "이완기혈압 "  # NIBP_수축기(mmHg) : 숫자
+pattern_dict["(NIBP_수축기+[^0-9]+[0-9. ]+)"] = "수축기혈압 "  # NIBP_이완기(mmHg) : 숫자
+pattern_dict["(PR+[^0-9]+[0-9. ]+)"] = "맥박  "  # PR문자열 : 숫자
+pattern_dict["(RR+[^0-9]+[0-9. ]+)"] = "호흡수 "  # RR문자열 : 숫자
+pattern_dict["(BT+[^0-9]+[0-9. ]+)"] = "체온 "  # BT문자열 : 숫자
+pattern_dict["(SpO+[^0-9]+[0-9. ]+)"] = "말초산소포화도 "  # SpO문자열 : 숫자
+pattern_dict["(Device+[^0-9]+[a-zA-Z]+)"] = "기기 "  # Device : 영문자
 
-pattern_dict["(FiO+[^0-9]+[0-9. ]+)"] = "흡입산소농도"  # FiO₂(%) : 숫자
-pattern_dict["(O₂ Flow(L/min)+[: ]+[0-9. ]+)"] = "산소유량"  # O₂ Flow(L/min) : 숫자
-pattern_dict["(pH+[▲▼: ]+[0-9. ]+pH+)"] = "수소이온농도"  # pH : 숫자 pH
-pattern_dict["(pCO2+[▲▼: ]+[0-9. ]+mmHg+)"] = "이산화탄소농도"  # pCO2 : 숫자 mmHg
-pattern_dict["(pO2+[▲▼: ]+[0-9. ]+mmHg+)"] = "산소농도"  # pO2 : 숫자 mmHg
-pattern_dict["(EVM+[: ]+E+[0-9]+V+[0-9]+M+[0-9]+)"] = "눈뜨기,언어,근력"  # EVM : E숫자V숫자M숫자
+pattern_dict["(FiO+[^0-9]+[0-9. ]+)"] = "흡입산소농도 "  # FiO₂(%) : 숫자
+pattern_dict["(O₂ Flow(L/min)+[: ]+[0-9. ]+)"] = "산소유량 "  # O₂ Flow(L/min) : 숫자
+pattern_dict["(pH+[▲▼: ]+[0-9. ]+pH+)"] = "수소이온농도 "  # pH : 숫자 pH
+pattern_dict["(pCO2+[▲▼: ]+[0-9. ]+mmHg+)"] = "이산화탄소농도 "  # pCO2 : 숫자 mmHg
+pattern_dict["(pO2+[▲▼: ]+[0-9. ]+mmHg+)"] = "산소농도 "  # pO2 : 숫자 mmHg
+pattern_dict["(EVM+[: ]+E+[0-9]+V+[0-9]+M+[0-9]+)"] = "눈뜨기,언어,근력 "  # EVM : E숫자V숫자M숫자
 pattern_dict[
     "(PS LR(R/L)+[: ]+[a-zA-Z0-9]+/+[a-zA-Z0-9]+)"
-] = "동공크기"  # PS LR(R/L) : 문자/문자
-pattern_dict["(의식상태+[: ]+[^0-9]+)"] = "동공빛반사"  # 의식상태 : 단어
-pattern_dict["(Pupil shape+[: ]+[^0-9]+/+[^0-9]+)"] = ""  # Pupil shape : 단어/단어
-pattern_dict["(Hemoglobin, Blood+[▲▼: ]+[0-9. ]+)"] = "헤모글로빈"  # Hemoglobin, Blood 숫자
-pattern_dict["(Albumin+[^0-9]+[0-9. ]+)"] = "알부민"  # Albumin (g/㎗    ): 숫자
-pattern_dict["(Location 1+[: ]+[^0-9]+)"] = "측정위치"  # Location 1 : 단어
-pattern_dict["(Comment+[: ]+[^0-9]+)"] = "코멘트"  # Comment : 단어
+] = "동공크기 "  # PS LR(R/L) : 문자/문자
+pattern_dict["(의식상태+[: ]+[^0-9]+)"] = "동공빛반사 "  # 의식상태 : 단어
+pattern_dict["(Pupil shape+[: ]+[^0-9]+/+[^0-9]+)"] = " "  # Pupil shape : 단어/단어
+pattern_dict["(Hemoglobin, Blood+[▲▼: ]+[0-9. ]+)"] = "헤모글로빈 "  # Hemoglobin, Blood 숫자
+pattern_dict["(Albumin+[^0-9]+[0-9. ]+)"] = "알부민 "  # Albumin (g/㎗    ): 숫자
+pattern_dict["(Location 1+[: ]+[^0-9]+)"] = "측정위치 "  # Location 1 : 단어
+pattern_dict["(Comment+[: ]+[^0-9]+)"] = "코멘트 "  # Comment : 단어
 pattern_dict[
     "(Potassium (K)+[▲▼: ]+[0-9. ]+mmol/ℓ+)"
-] = "포타슘"  # Potassium (K) : 숫자 mmol/ℓ
+] = "포타슘 "  # Potassium (K) : 숫자 mmol/ℓ
 pattern_dict[
     "(ANC (Absolute Neutrophil Count)+)"
-] = "절대호중구수"  # ANC (Absolute Neutrophil Count)
-pattern_dict["(APTT+[▲▼: ]+[0-9. ]+sec+)"] = "활성화부분트롬보플라스틴시간"  # APTT : 실수 sec
-pattern_dict["(Mg+[▲▼: ]+[0-9. ]+㎎/㎗+)"] = "마그네슘"  # Mg : 숫자 ㎎/㎗
+] = "절대호중구수 "  # ANC (Absolute Neutrophil Count)
+pattern_dict["(APTT+[▲▼: ]+[0-9. ]+sec+)"] = "활성화부분트롬보플라스틴시간 "  # APTT : 실수 sec
+pattern_dict["(Mg+[▲▼: ]+[0-9. ]+㎎/㎗+)"] = "마그네슘 "  # Mg : 숫자 ㎎/㎗
 pattern_dict[
     "(Osmolality, Serum+[^0-9]+[0-9. ]+)"
-] = "혈청삼투압농도"  # Osmolality, Serum (mOsm/㎏ ):숫자
-pattern_dict["(Creatinine+[^0-9]+[0-9. ]+)"] = "크레아티닌"  # Creatinine (㎎/㎗   ):숫자
+] = "혈청삼투압농도 "  # Osmolality, Serum (mOsm/㎏ ):숫자
+pattern_dict["(Creatinine+[^0-9]+[0-9. ]+)"] = "크레아티닌 "  # Creatinine (㎎/㎗   ):숫자
 
 # pattern_dict[
 #     '(([0-9]{4}-[0-9]{2}-[0-9]{2})+[ \[]+[a-zA-Z ]+[\] :]+Any PH)']  # 4자리숫자-2자리숫자-2자리숫자 [영문 | 공백] : Any PH
 # pattern_dict[
 #     '(([0-9]{4}-[0-9]{2}-[0-9]{2})+[ \[]+[a-zA-Z ]+[\] :]+Any mmHg)']  # 4자리숫자-2자리숫자-2자리숫자 [영문 | 공백] : Any mmHg
 
-# 특수문자들 (따옴표, 쉼표, 마침표, 콤마 등)
-pattern_dict["([^0-9a-zA-Zㄱ-ㅣ가-힣 \n])"] = ""
-pattern_dict["([0-9])"] = ""  # 숫자
 
+# 특수문자들 (따옴표, 쉼표, 마침표, 콤마 등)
+remove_pattern_dict = {}
+remove_pattern_dict["([^0-9a-zA-Zㄱ-ㅣ가-힣 \n])"] = ""
+remove_pattern_dict["([0-9])"] = ""  # 숫자
 
 try:
     """
@@ -92,11 +99,14 @@ try:
                 pass
 
             else:
-                note_str = replace_string_pattern(
-                    note_str, pattern_dict
-                )  # 사전에 정의한 제거문자열 패턴을 탐색하여 제거
+                # 사전에 정의한 패턴을 탐색하여 치환
+                note_str = replace_string_pattern(note_str, pattern_dict)
 
+                # en2ko_dictionary 기반 번역 작업
                 note_str = translation(note_str)
+
+                # 특수문자 제거
+                note_str = replace_string_pattern(note_str, remove_pattern_dict)
 
                 # 행의 시작이 공백이나 특수문자로 시작된다면 해당 문자를 모두 제거
                 note_str = note_str.lstrip()  # 왼쪽의 공백 삭제하기
