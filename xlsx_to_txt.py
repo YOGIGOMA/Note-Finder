@@ -3,9 +3,9 @@
 import pandas as pd
 import os
 
-INPUT_FILE_NAME = "Train_원본엑셀.xlsx"
-TEMP_FILE_NAME = "temp.txt"
-OUPUT_FILE_NAME = "input.txt"
+INPUT_FILE_NAME = "data/Train_원본엑셀.xlsx"
+TEMP_FILE_NAME = "data/temp.txt"
+OUPUT_FILE_NAME = "data/input.txt"
 
 df = pd.read_excel(INPUT_FILE_NAME,
                    sheet_name=0)
