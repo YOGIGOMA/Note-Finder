@@ -21,7 +21,7 @@ os.remove(TEMP_FILE_NAME)
 f = open(OUPUT_FILE_NAME, "w", encoding="utf-8")
 for line in lines:
     line = line.strip(" ")
-    line = line.replace("\n", " ")
+    line = line.replace("\\n", " ")
     line = line.replace("_x000D_", " ")
     line = line + "\n\n"
     f.write(line)
