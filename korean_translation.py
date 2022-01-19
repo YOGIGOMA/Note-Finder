@@ -6,17 +6,14 @@ import pandas as pd
 
 def translation(input_str):
     for i in range(len(dic_df)):
-        input_str = re.sub(
-            " " + dic_df.loc[i]["#en"], " " + dic_df.loc[i]["#ko"], input_str
-        )
-        input_str = re.sub(
-            dic_df.loc[i]["#en"] + " ", dic_df.loc[i]["#ko"] + " ", input_str
-        )
+        input_str = re.sub(dic_df.loc[i]["#en"].strip(),
+                           dic_df.loc[i]["#ko"].strip(), input_str)
 
     return input_str
 
 
-def replace_string_pattern(input_str, pattern_dict):  # 사전에 정의한 제거문자열 패턴을 탐색하여 제거하는 함수
+# 사전에 정의한 제거문자열 패턴을 탐색하여 제거하는 함수
+def replace_string_pattern(input_str, pattern_dict):
     for p, r in pattern_dict.items():
         input_str = re.sub(pattern=p, repl=r, string=input_str)
 
@@ -29,7 +26,8 @@ output = open("data/input_ko.txt", mode="w", encoding="utf-8")
 input_list = input.readlines()  # 입력 텍스트파일의 데이터를 리스트 형태로 변환함
 output_list = ["#ProcessedData\n"]
 
-dic_df = pd.read_csv("data/en2ko_dictionary.csv", encoding="utf-8", low_memory=False)
+dic_df = pd.read_csv("data/en2ko_dictionary.csv",
+                     encoding="utf-8", low_memory=False)
 
 pattern_dict = {}
 
@@ -47,13 +45,16 @@ pattern_dict["(O₂ Flow(L/min)+[: ]+[0-9. ]+)"] = "산소유량 "  # O₂ Flow(
 pattern_dict["(pH+[▲▼: ]+[0-9. ]+pH+)"] = "수소이온농도 "  # pH : 숫자 pH
 pattern_dict["(pCO2+[▲▼: ]+[0-9. ]+mmHg+)"] = "이산화탄소농도 "  # pCO2 : 숫자 mmHg
 pattern_dict["(pO2+[▲▼: ]+[0-9. ]+mmHg+)"] = "산소농도 "  # pO2 : 숫자 mmHg
-pattern_dict["(EVM+[: ]+E+[0-9]+V+[0-9]+M+[0-9]+)"] = "눈뜨기,언어,근력 "  # EVM : E숫자V숫자M숫자
+# EVM : E숫자V숫자M숫자
+pattern_dict["(EVM+[: ]+E+[0-9]+V+[0-9]+M+[0-9]+)"] = "눈뜨기,언어,근력 "
 pattern_dict[
     "(PS LR(R/L)+[: ]+[a-zA-Z0-9]+/+[a-zA-Z0-9]+)"
 ] = "동공크기 "  # PS LR(R/L) : 문자/문자
 pattern_dict["(의식상태+[: ]+[^0-9]+)"] = "동공빛반사 "  # 의식상태 : 단어
-pattern_dict["(Pupil shape+[: ]+[^0-9]+/+[^0-9]+)"] = " "  # Pupil shape : 단어/단어
-pattern_dict["(Hemoglobin, Blood+[▲▼: ]+[0-9. ]+)"] = "헤모글로빈 "  # Hemoglobin, Blood 숫자
+# Pupil shape : 단어/단어
+pattern_dict["(Pupil shape+[: ]+[^0-9]+/+[^0-9]+)"] = " "
+# Hemoglobin, Blood 숫자
+pattern_dict["(Hemoglobin, Blood+[▲▼: ]+[0-9. ]+)"] = "헤모글로빈 "
 pattern_dict["(Albumin+[^0-9]+[0-9. ]+)"] = "알부민 "  # Albumin (g/㎗    ): 숫자
 pattern_dict["(Location 1+[: ]+[^0-9]+)"] = "측정위치 "  # Location 1 : 단어
 pattern_dict["(Comment+[: ]+[^0-9]+)"] = "코멘트 "  # Comment : 단어
@@ -68,7 +69,8 @@ pattern_dict["(Mg+[▲▼: ]+[0-9. ]+㎎/㎗+)"] = "마그네슘 "  # Mg : 숫�
 pattern_dict[
     "(Osmolality, Serum+[^0-9]+[0-9. ]+)"
 ] = "혈청삼투압농도 "  # Osmolality, Serum (mOsm/㎏ ):숫자
-pattern_dict["(Creatinine+[^0-9]+[0-9. ]+)"] = "크레아티닌 "  # Creatinine (㎎/㎗   ):숫자
+# Creatinine (㎎/㎗   ):숫자
+pattern_dict["(Creatinine+[^0-9]+[0-9. ]+)"] = "크레아티닌 "
 
 # pattern_dict[
 #     '(([0-9]{4}-[0-9]{2}-[0-9]{2})+[ \[]+[a-zA-Z ]+[\] :]+Any PH)']  # 4자리숫자-2자리숫자-2자리숫자 [영문 | 공백] : Any PH
@@ -106,7 +108,8 @@ try:
                 note_str = translation(note_str)
 
                 # 특수문자 제거
-                note_str = replace_string_pattern(note_str, remove_pattern_dict)
+                note_str = replace_string_pattern(
+                    note_str, remove_pattern_dict)
 
                 # 행의 시작이 공백이나 특수문자로 시작된다면 해당 문자를 모두 제거
                 note_str = note_str.lstrip()  # 왼쪽의 공백 삭제하기
