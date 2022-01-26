@@ -1,3 +1,5 @@
 data/en2ko_dictionary.csv
 data/input_ko.txt
 data/input.txt
+data/abbreviation_dictionary.csv
+data/drug_name_dictionary.csv
