@@ -3,6 +3,16 @@
 ## Change Log
 날짜의 역순으로 변경이력을 기록하세요.
 
+### 2022-01-26
+- 프로그램을 함수화하였습니다.
+  - `word_normalization.py`는 단어들을 정규화하여 처리합니다.
+  - `test_and_measurement_normalization.py`는 검사, 측정 문자들의 앞뒤에 태그를 부착해주는 파일입니다.
+  - `drug_name_translation.py`는 `drug_name_dictionary.csv`을 기반으로 translation 하는 합니다.
+  - `abbreviation_translation.py`는 `abbreviation_dictionart.csv`을 기반으로 translation 합니다.
+  - `en2ko_translation.py`는 `en2ko_dictionary`를 기반으로 영문을 국문으로 변환합니다.
+
+- 기존의 `korean_translation.py`의 파일명을 `main.py`로 바꾸고, 부분수정하였습니다.
+
 ### 2022-01-20
 - `translation` 함수 기능 향상
   - 2021-01-11에 commit한 단어 앞뒤에 `ㅤ`(띄어쓰기)를 포함하는 코드 삭제
