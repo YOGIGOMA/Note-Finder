@@ -4,8 +4,8 @@
 1. 단어 정규화 (word_normalization.py)
 2. 검사_측정 (test_and_measurement_normalization)
 3. 약물명 (drug_name_translation)
-4. 약어 사전 (abbreviation_translation)
-5. En2Ko (en2ko_translation)
+4. En2Ko (en2ko_translation)
+5. 약어 사전 (abbreviation_translation)
 '''
 
 import string  # string.punctuation 사용하기 위해 import
@@ -13,15 +13,14 @@ import string  # string.punctuation 사용하기 위해 import
 from word_normalization import word_normalization
 from test_and_measurement_normalization import test_and_measurement_tagging
 from drug_name_translation import drug_name_translation
-from abbreviation_translation import abbreviation_translation
 from en2ko_translation import en2ko_translation, print_dic_length
+from abbreviation_translation import abbreviation_translation
 
 input = open("data/input.txt", mode="r", encoding="utf-8")
 output = open("data/input_ko.txt", mode="w", encoding="utf-8")
 
 input_list = input.readlines()  # 입력 텍스트파일의 데이터를 리스트 형태로 변환함
 output_list = ["#ProcessedData\n"]
-
 
 # 특수문자들 (따옴표, 쉼표, 마침표, 콤마 등)
 remove_pattern_dict = {}
@@ -58,8 +57,8 @@ try:
                 note_str = word_normalization(note_str) # 단어 정규화 (word_normalization.py)
                 note_str = test_and_measurement_tagging(note_str) # 검사_측정 (test_and_measurement_normalization)
                 note_str = drug_name_translation(note_str) # 약물명 (drug_name_translation)
-                note_str = abbreviation_translation(note_str) # 약어 사전 (abbreviation_translation)
                 note_str = en2ko_translation(note_str) # En2Ko (en2ko_translation)
+                note_str = abbreviation_translation(note_str) # 약어 사전 (abbreviation_translation)
 
                 # 특수문자 제거
                 # note_str = replace_string_pattern(note_str, remove_pattern_dict)
