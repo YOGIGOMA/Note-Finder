@@ -16,16 +16,17 @@ from drug_name_translation import drug_name_translation
 from en2ko_translation import en2ko_translation, print_dic_length
 from abbreviation_translation import abbreviation_translation
 
-input = open("data/input.txt", mode="r", encoding="utf-8")
-output = open("data/input_ko.txt", mode="w", encoding="utf-8")
+input_txt = open("data/input.txt", mode="r", encoding="utf-8")
+output_txt = open("data/input_ko.txt", mode="w", encoding="utf-8")
 
-input_list = input.readlines()  # 입력 텍스트파일의 데이터를 리스트 형태로 변환함
+# input_txt = open("data/input_ko.txt", mode="r", encoding="utf-8")
+# output_txt = open("data/input_temp.txt", mode="w", encoding="utf-8")
+
+input_list = input_txt.readlines()  # 입력 텍스트파일의 데이터를 리스트 형태로 변환함
 output_list = ["#ProcessedData\n"]
 
 # 특수문자들 (따옴표, 쉼표, 마침표, 콤마 등)
-remove_pattern_dict = {}
-remove_pattern_dict["([^0-9a-zA-Zㄱ-ㅣ가-힣 \n])"] = ""
-remove_pattern_dict["([0-9])"] = ""  # 숫자
+remove_pattern_dict = {"([^0-9a-zA-Zㄱ-ㅣ가-힣 \n])": "", "([0-9])": ""}
 
 
 # 사전에 정의한 제거문자열 패턴을 탐색하여 제거하는 함수
@@ -54,8 +55,10 @@ try:
                 pass
 
             else:
-                note_str = word_normalization(note_str) # 단어 정규화 (word_normalization.py)
-                note_str = test_and_measurement_tagging(note_str) # 검사_측정 (test_and_measurement_normalization)
+                note_str = note_str.replace("\\n", " ")
+
+                note_str = word_normalization(note_str)  # 단어 정규화 (word_normalization.py)
+                note_str = test_and_measurement_tagging(note_str)  # 검사_측정 (test_and_measurement_normalization)
                 note_str = drug_name_translation(note_str) # 약물명 (drug_name_translation)
                 note_str = en2ko_translation(note_str) # En2Ko (en2ko_translation)
                 note_str = abbreviation_translation(note_str) # 약어 사전 (abbreviation_translation)
@@ -65,10 +68,10 @@ try:
 
                 # 행의 시작이 공백이나 특수문자로 시작된다면 해당 문자를 모두 제거
                 note_str = note_str.lstrip()  # 왼쪽의 공백 삭제하기
-                note_str = note_str.lstrip(string.punctuation)  # 왼쪽의 구두점 삭제
+                # note_str = note_str.lstrip(string.punctuation)  # 왼쪽의 구두점 삭제
 
                 # 불필요한 문자열 제거 후
-                if (note_str == "" or note_str == " " or note_str == "," or note_str == "\n"):
+                if note_str == "" or note_str == " " or note_str == "," or note_str == "\n":
                     # 만약 불필요한 문자열을 제거하였는데 남은게 없다면
                     pass
 
@@ -84,12 +87,11 @@ except Exception as e:  # 입력 번역사전 텍스트파일을 처리하는 �
     print("Error가 발생했습니다.", e)
     print("문제가 발생한 위치 :", idx)  # 문제가 발생한 위치와 이유를 출력하고 처리를 중지
 
-
 print("입력 텍스트파일에서 읽은 행의 개수", len(input_list))
 print_dic_length()
 print("만들어진 입력데이터의 개수", len(output_list))
 
-output.writelines(output_list)
+output_txt.writelines(output_list)
 
-output.close()
-input.close()
+output_txt.close()
+input_txt.close()

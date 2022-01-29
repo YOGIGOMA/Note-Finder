@@ -3,6 +3,11 @@
 ## Change Log
 날짜의 역순으로 변경이력을 기록하세요.
 
+### 2022-01-29
+- `test_and_measurement_normalization.py`를 수정하였습니다.
+  - 사전에 정규 표현식 패턴을 컴파일하여 `compiled_test_and_measurement` 리스트에 저장 
+  - `test_and_measurement_tagging` 함수 내에 문자열 치환하는 과정에서의 오류 수정
+
 ### 2022-01-27
 - 영문2한글의 작업순서가 변경됨에 따라 note_str의 처리 순서를 수정하였습니다.
   - `abbreviation_translation` (약어 번역 작업)의 순서를 맨 마지막으로 변경
