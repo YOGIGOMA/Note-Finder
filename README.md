@@ -3,6 +3,10 @@
 ## Change Log
 날짜의 역순으로 변경이력을 기록하세요.
 
+### 2022-02-09
+- 약어를 처리할 때, 단어 앞의 공백을 포함하고, 단어 뒤에 국문(ex>조사 등)이 있어도 인식하여 변환하도록 `abbreviation_translation.py` 파일을 수정하였습니다.
+- 업데이트된 '단어_정규화'를 추가하였습니다.
+
 ### 2022-01-29
 - `test_and_measurement_normalization.py`를 수정하였습니다.
   - 사전에 정규 표현식 패턴을 컴파일하여 `compiled_test_and_measurement` 리스트에 저장 
