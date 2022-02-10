@@ -11,7 +11,7 @@ def abbreviation_translation(input_str):
     for i in range(len(ab_df)):
         temp_str = ab_df.loc[i]["#en"].strip().lower()
         # input_str = re.sub(" " + ab_df.loc[i]["#en"].strip().lower() + " ", " " + ab_df.loc[i]["#ko"].strip() + " ", input_str)
-        input_str = re.sub(f"\s{temp_str}(?=[가-힣 ])", " " + ab_df.loc[i]["#ko"].strip(), input_str)
+        input_str = re.sub(f"\s{temp_str}(?=[가-힣0-9 ])", " " + ab_df.loc[i]["#ko"].strip(), input_str)
 
 
     return input_str

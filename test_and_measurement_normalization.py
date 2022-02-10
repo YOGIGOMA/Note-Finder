@@ -38,8 +38,10 @@ def test_and_measurement_tagging(input_str):
 
 def lower_except_tag(input_str):
     if bool(re.search("</검사측정/>", input_str)):  # input_str에 tag가 포함되어 있는 경우
-        return re.sub("(^|(?<=</검사측정/>)).*?($|(?=<검사측정>))", lambda m: m.group().lower(), input_str)
+        lower_str = re.sub("(^|(?<=</검사측정/>)).*?($|(?=<검사측정>))", lambda m: m.group().lower(), input_str)
+        return re.sub("(^|(?<=<검사측정>)).*?($|(?=</검사측정/>))", lambda m: m.group().replace(" ", "_"), lower_str)
 
     else:  # input_str에 tag가 포함되어 있지 않은 경우
         # 모든 알파벳을 소문자로 만듬
         return input_str.lower()
+
