@@ -20,10 +20,11 @@ def get_nouns(input_str):
         input_str = input_str.replace("<검사측정>", "")
         input_str = input_str.replace("</검사측정/>", "")
 
-    output_str = ", ".join(hannanum.nouns(input_str))
+    tokened_list = hannanum.nouns(input_str)
+    output_str = ", ".join(tokened_list)
     # output_str = " ".join(okt.nouns(input_str))
 
-    return " " + output_str + " "
+    return " " + output_str + " ", tokened_list
 
 
 def get_freq(corpus):
