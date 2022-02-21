@@ -26,16 +26,6 @@ compiled_test_and_measurement = [re.compile("(NIBP_평균+\(mmHg\)+[ :]+[0-9]{2,
                                  re.compile("(Creatinine\s*\(㎎/㎗\s*\)\s*:\s*[0-9.]+)")]
 
 
-def test_and_measurement_tagging(input_str):
-    for obj in compiled_test_and_measurement:
-        result = obj.finditer(input_str)
-        for m in result:
-            temp_str = m.group()
-            input_str = input_str.replace(temp_str, "<검사측정>" + temp_str + "</검사측정/>")
-
-    return lower_except_tag(input_str)
-
-
 def lower_except_tag(input_str):
     if bool(re.search("</검사측정/>", input_str)):  # input_str에 tag가 포함되어 있는 경우
         lower_str = re.sub("(^|(?<=</검사측정/>)).*?($|(?=<검사측정>))", lambda m: m.group().lower(), input_str)
@@ -45,3 +35,12 @@ def lower_except_tag(input_str):
         # 모든 알파벳을 소문자로 만듬
         return input_str.lower()
 
+
+def test_and_measurement_tagging(input_str):
+    for obj in compiled_test_and_measurement:
+        result = obj.finditer(input_str)
+        for m in result:
+            temp_str = m.group()
+            input_str = input_str.replace(temp_str, "<검사측정>" + temp_str + "</검사측정/>")
+
+    return lower_except_tag(input_str)

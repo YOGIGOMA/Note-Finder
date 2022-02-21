@@ -13,17 +13,21 @@ import re
 # import string  # string.punctuation 사용하기 위해 import
 
 from word_normalization import word_normalization
-from test_and_measurement_normalization import test_and_measurement_tagging, lower_except_tag
+from test_and_measurement_normalization import test_and_measurement_tagging
 from drug_name_translation import drug_name_translation
 from en2ko_translation import en2ko_translation, print_dic_length
 from abbreviation_translation import abbreviation_translation
 from tokenization import get_nouns, get_freq
+from gensim.models import Word2Vec
 
-input_txt = open("data/input.txt", mode="r", encoding="utf-8")
-output_txt = open("data/input_ko.txt", mode="w", encoding="utf-8")
+# input_txt = open("data/input.txt", mode="r", encoding="utf-8")
+# output_txt = open("data/input_ko.txt", mode="w", encoding="utf-8")
 
-# input_txt = open("data/input_ko.txt", mode="r", encoding="utf-8")
-# output_txt = open("data/input_ko_tokened.txt", mode="w", encoding="utf-8")
+input_txt = open("data/input_ko.txt", mode="r", encoding="utf-8")
+output_txt = open("data/input_ko_tokened.txt", mode="w", encoding="utf-8")
+
+# input_txt = open("data/input_ko_tokened.txt", mode="r", encoding="utf-8")
+# output_txt = open("data/input_ko_vectored.txt", mode="w", encoding="utf-8")
 
 
 input_list = input_txt.readlines()  # 입력 텍스트파일의 데이터를 리스트 형태로 변환함
@@ -51,6 +55,7 @@ try:
 
     note_str = ""
     docs = []
+    tokenized_data = []
     for idx in range(1, len(input_list)):  # 첫째줄을 제외하고 input.text 행을 기준으로 데이터를 처리
         print(f"{idx} of {len(input_list)}")
 
@@ -62,15 +67,15 @@ try:
             else:
                 note_str = note_str.replace("\\n", " ")
 
-                # note_str = word_normalization(note_str)  # 단어 정규화 (word_normalization.py)
-                # note_str = test_and_measurement_tagging(note_str)  # 검사_측정 (test_and_measurement_normalization)
-                # note_str = drug_name_translation(note_str)  # 약물명 (drug_name_translation)
-                # note_str = en2ko_translation(note_str)  # En2Ko (en2ko_translation)
-                # note_str = abbreviation_translation(note_str)  # 약어 사전 (abbreviation_translation)
-                note_str = get_nouns(note_str)
+                note_str = word_normalization(note_str)  # 단어 정규화 (word_normalization.py)
+                note_str = test_and_measurement_tagging(note_str)  # 검사_측정 (test_and_measurement_normalization)
+                note_str = drug_name_translation(note_str)  # 약물명 (drug_name_translation)
+                note_str = en2ko_translation(note_str)  # En2Ko (en2ko_translation)
+                note_str = abbreviation_translation(note_str)  # 약어 사전 (abbreviation_translation)
+                note_str, tokened_list = get_nouns(note_str)
 
                 docs.append(note_str)
-
+                tokenized_data.append(tokened_list)
                 # 특수문자 제거
                 # note_str = replace_string_pattern(note_str, remove_pattern_dict)
 
@@ -91,10 +96,16 @@ try:
         else:  # 행이 비어있지 않고, 내용이 들어있을 때
             note_str += input_list[idx][:-1]
 
-    get_dtm(docs)
+    # dtm을 구하는 코드
+    get_freq(docs)
+
+    # Word2Vec 모델을 학습시켜 저장하는 코드
+    model = Word2Vec(sentences=tokenized_data, vector_size=100, window=5, min_count=5, workers=4, sg=0)
+    model.wv.save_word2vec_format("kr_w2v")
+
 
 except Exception as e:  # 입력 번역사전 텍스트파일을 처리하는 도중 혹은 입력 텍스트파일을 처리하는 도중에 문제가 생기는 경우
-    print("Error가 발생했습니다.", e)
+    print("Error가 발생했습니다. : ", e)
     print("문제가 발생한 위치 :", idx)  # 문제가 발생한 위치와 이유를 출력하고 처리를 중지
 
 print("입력 텍스트파일에서 읽은 행의 개수", len(input_list))
