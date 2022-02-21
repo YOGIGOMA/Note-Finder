@@ -1,5 +1,6 @@
 __pycache__
 data
+kr_w2v
 data/en2ko_dictionary.csv
 data/input_ko.txt
 data/input.txt

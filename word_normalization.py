@@ -14,8 +14,8 @@ normalization_pattern["/(hr|HR)"] = "시간당"  # /hr
 
 normalization_pattern["prof?.?\s?[가-힣]+"] = "의사이름"  # prof.ooo, pro.ooo
 normalization_pattern["pf.?\s?[가-힣]+"] = "의사이름"  # pf.ooo
-normalization_pattern["[Dd]r.?\s?[가-힣]+"] = "의사이름"  # dr.ooo, Dr. ooo
-normalization_pattern["[Rr][1-4].?\s?[가-힣]+"] = "의사이름"  # R1 ooo 또는 r1 OOO, R2 ooo 또는 r2 OOO, R3 ooo 또는 r3 OOO, R4OOO
+normalization_pattern["[Dd][Rr].?\s?[가-힣]+"] = "의사이름"  # dr.ooo, Dr. ooo
+normalization_pattern["[Rr][1-4]?.?\s?[가-힣]+"] = "의사이름"  # R1 ooo 또는 r1 OOO, R2 ooo 또는 r2 OOO, R3 ooo 또는 r3 OOO, R4OOO
 normalization_pattern["주치의.?\s?[가-힣]+"] = "의사이름"  # 주치의 홍길동, 주치의 OO
 normalization_pattern["당직의사?.?\s?[가-힣]+"] = "의사이름"  # 당직의 OOO, 당직의사 OOO, 당직의 OO
 normalization_pattern["인턴.?\s?[가-힣]+"] = "의사이름"  # 인턴 OOO, 인턴 OO
