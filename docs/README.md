@@ -1,7 +1,6 @@
 # Process of Fall Detection in Clinic Note
 
-check [Here](/etc/flow.html)
-![flow image](/etc/flow.svg)
+check [Here](https://oneonlee.github.io/Note-Finder/docs/etc/flow.html)
 
 ## Phase 1. Pre-Preprocessing
 
