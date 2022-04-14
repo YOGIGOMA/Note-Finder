@@ -1,6 +1,6 @@
 # Process of Fall Detection in Clinic Note
 
-check [Here](https://oneonlee.github.io/Note-Finder/docs/etc/flow.html)
+**Flow Chart** 확인하려면 [**클릭**](https://oneonlee.github.io/Note-Finder/docs/etc/flow.html)
 
 ## Phase 1. Pre-Preprocessing
 
