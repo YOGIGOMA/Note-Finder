@@ -95,12 +95,12 @@ Raw Data, Processed Data, Tokenized Data 모두 (Accuracy Score 기준) 0.99이�
 
 
 ### 2022. 04. 27. 분석 결과
-Training Data는 6000개 data에 KOPS data를 낙상 label과 비낙상 label이 90:10의 비율을 갖도록 구성하였다.
+Training Data는 6000개 data에 KOPS data를 낙상 label과 비낙상 label이 10:90의 비율을 갖도록 구성하였다.
 
 | Data Info.                | label 0 (Non-Fall) | label 1 (Fall) | Total |
 | ------------------------- | ------------------ | -------------- | ----- |
-| Training Data             | 648 (10%)          | 5832 (90%)     | 6480  |
-| Testing Data              | 120 (3%)           | 4006 (97%)     | 4126  |
+| Training Data             | 5832 (90%)         | 648 (10%)      | 6480  |
+| Testing Data              | 4006 (97%)         | 120 (3%)       | 4126  |
 
 
 | TrainingData →<br> TestingData ↓ | Raw Data                                                                                                                                                                 | Processed Data                                                                                                                                                               | Tokenized Data                                                                                                                                                              |
@@ -108,3 +108,8 @@ Training Data는 6000개 data에 KOPS data를 낙상 label과 비낙상 label이
 | Raw Data                         | Precision: [0.9935227 0.8392857]<br> Recall: [0.9955067 0.7833333]<br> F1 score: [0.9945137 0.8103448]<br> Support: [4006  120]<br> Accuracy score: 0.9893359185         | Precision: [0.99525   0.8015873]<br> Recall: [0.9937594 **0.8416667**]<br> F1 score: [0.9945041 0.8211382]<br> Support: [4006  120]<br> Accuracy score: 0.9893359186         | Precision: [0.9829798 0.7083333]<br> Recall: [0.9947579 0.425     ]<br> F1 score: [0.9888338 0.53125   ]<br> Support: [4006  120]<br> Accuracy score: 0.9781871062          |
 | Processed Data                   | Precision: [**0.9962217** 0.6730769]<br> Recall: [0.987269 0.875    ]<br> F1 score: [0.9917252 0.7608696]<br> Support: [4006  120]<br> Accuracy score: 0.9840038778      | Precision: [0.9942701 **0.8660714**]<br> Recall: [0.9962556 0.8083333]<br> F1 score: [**0.9952619** **0.836207** ]<br> Support: [4006  120]<br> Accuracy score: **0.9907901115** | Precision: [*0.9811089* 0.86      ]<br> Recall: [**0.9982526** *0.3583333*]<br> F1 score: [0.9896065 *0.5058824*]<br> Support: [4006  120]<br> Accuracy score: 0.9796412991 |
 | Tokenized Data                   | Precision: [0.9913021 *0.3963134*]<br> Recall: [*0.9672991* 0.7166667]<br> F1 score: [*0.9791535* 0.5103858]<br> Support: [4006  120]<br> Accuracy score: *0.9600096946* | Precision: [0.9907754 0.7217391]<br> Recall: [0.9920120 0.6916667]<br> F1 score: [0.9913933 0.7063830]<br> Support: [4006  120]<br> Accuracy score: 0.9832767814<br>         | Precision: [0.9950075 0.8333333]<br> Recall: [0.9950075 0.8333333]<br> F1 score: [0.9950075 0.8333333]<br> Support: [4006  120]<br> Accuracy score: 0.9903053805        |
+
+#### 결론
+> 1. Training Data의 비율을 10:90으로 구성하였음
+> 2. Testing Data는 Real World Data의 비율과 유사하게 3:97로 구성하였음
+> 3. Training Data와 Testing Data 모두 Processed Data로 구성하였을 때가 가장 좋은 성능을 보임
