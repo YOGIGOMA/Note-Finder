@@ -124,3 +124,88 @@ Training Data는 6000개 data에 KOPS data를 낙상 label과 비낙상 label이
 | Processed Data                   | Precision: [0.99000357 0.72996516]<br>Recall: [0.98894437 0.74955277]<br>F1 score: [0.98947368 0.7396293 ]<br>Accuracy score: 0.9797654160093285                         | Precision: [0.98888496 0.88546256]<br>Recall: [0.99629101 0.71914132]<br>F1 score: [0.99257417 0.79368213]<br>Accuracy score: 0.9856643116811853                             | Precision: [0.98172179 0.16898506]<br>Recall: [0.88495007 0.58676208]<br>F1 score: [0.93082752 0.2624    ]<br>Accuracy score: 0.8735167021057686                            |
 | Tokenized Data                   | Precision: [0.97478933 0.5899705 ]<br>Recall: [0.99008559 0.35778175]<br>F1 score: [0.98237792 0.4454343 ]<br>Accuracy score: 0.9658412785513409                         | Precision: [0.97185154 0.80628272]<br>Recall: [0.99736091 0.27549195]<br>F1 score: [0.984441   0.41066667]<br>Accuracy score: 0.9696824199190617                             | Precision: [0.99209964 0.84688091]<br>Recall: [0.99422254 0.80143113]<br>F1 score: [0.99315996 0.82352941]<br>Accuracy score: 0.986830372453529                             |
 
+
+<!-- Warning : `load_model` does not return WordVectorModel or SupervisedModel any more, but a `FastText` object which is very similar.
+사용한 훈련 데이터 종류 : note
+사용한 평가 데이터 종류 : note
+Precision        : 0.8347
+Recall           : 0.7138
+F1 score         : 0.7695
+Accuracy score   : 0.9836
+[[13941    79]
+ [  160   399]]
+
+사용한 훈련 데이터 종류 : note
+사용한 평가 데이터 종류 : #ProcessedData
+Precision        : 0.4005
+Recall           : 0.8640
+F1 score         : 0.5473
+Accuracy score   : 0.9452
+[[13297   723]
+ [   76   483]]
+
+사용한 훈련 데이터 종류 : note
+사용한 평가 데이터 종류 : #TokenizedData
+Precision        : 0.0953
+Recall           : 0.7567
+F1 score         : 0.1693
+Accuracy score   : 0.7152
+[[10004  4016]
+ [  136   423]]
+
+Warning : `load_model` does not return WordVectorModel or SupervisedModel any more, but a `FastText` object which is very similar.
+사용한 훈련 데이터 종류 : #ProcessedData
+사용한 평가 데이터 종류 : note
+Precision        : 0.7601
+Recall           : 0.7370
+F1 score         : 0.7484
+Accuracy score   : 0.9810
+[[13890   130]
+ [  147   412]]
+
+사용한 훈련 데이터 종류 : #ProcessedData
+사용한 평가 데이터 종류 : #ProcessedData
+Precision        : 0.8822
+Recall           : 0.6834
+F1 score         : 0.7702
+Accuracy score   : 0.9844
+[[13969    51]
+ [  177   382]]
+
+사용한 훈련 데이터 종류 : #ProcessedData
+사용한 평가 데이터 종류 : #TokenizedData
+Precision        : 0.1578
+Recall           : 0.5170
+F1 score         : 0.2418
+Accuracy score   : 0.8757
+[[12478  1542]
+ [  270   289]]
+
+Warning : `load_model` does not return WordVectorModel or SupervisedModel any more, but a `FastText` object which is very similar.
+사용한 훈련 데이터 종류 : #TokenizedData
+사용한 평가 데이터 종류 : note
+Precision        : 0.6708
+Recall           : 0.2916
+F1 score         : 0.4065
+Accuracy score   : 0.9674
+[[13940    80]
+ [  396   163]]
+
+사용한 훈련 데이터 종류 : #TokenizedData
+사용한 평가 데이터 종류 : #ProcessedData
+Precision        : 0.7711
+Recall           : 0.2290
+F1 score         : 0.3531
+Accuracy score   : 0.9678
+[[13982    38]
+ [  431   128]]
+
+사용한 훈련 데이터 종류 : #TokenizedData
+사용한 평가 데이터 종류 : #TokenizedData
+Precision        : 0.8318
+Recall           : 0.7871
+F1 score         : 0.8088
+Accuracy score   : 0.9857
+[[13931    89]
+ [  119   440]]
+ -->
