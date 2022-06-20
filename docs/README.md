@@ -215,3 +215,11 @@ Accuracy score   : 0.9857
 [[13931    89]
  [  119   440]]
  -->
+
+### 2022. 06. 20. 결과
+
+| TrainingData →<br>  TestData ↓ | Raw Data                                                                                                                | Processed Data                                                                                                          | Tokenized Data                                                                                                              |
+|--------------------------------|-------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| Raw Data                       | Precision        : 0.6885<br> Recall           : 0.2258<br> F1 score         : 0.3401<br> Accuracy score   : 0.9642 | Precision        : 0.8497<br> Recall           : 0.2330<br> F1 score         : 0.3657<br> Accuracy score   : 0.9670 | Precision        : 0.8259<br> Recall           : 0.7993<br> F1 score         : 0.8124<br> Accuracy score   : 0.9849 |
+| Processed Data                 | Precision        : 0.6885<br> Recall           : 0.2258<br> F1 score         : 0.3401<br> Accuracy score   : 0.9642 | Precision        : 0.8497<br> Recall           : 0.2330<br> F1 score         : 0.3657<br> Accuracy score   : 0.9670 | Precision        : 0.8259<br> Recall           : 0.7993<br> F1 score         : 0.8124<br> Accuracy score   : 0.9849 |
+| Tokenized Data                 | Precision        : 0.6885<br> Recall           : 0.2258<br> F1 score         : 0.3401<br> Accuracy score   : 0.9642 | Precision        : 0.8497<br> Recall           : 0.2330<br> F1 score         : 0.3657<br> Accuracy score   : 0.9670 | Precision        : 0.8259<br> Recall           : 0.7993<br> F1 score         : 0.8124<br> Accuracy score   : 0.9849 |
